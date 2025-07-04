@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Contact us  page</title>
+<link rel="stylesheet"  type= "text/css" th:href="@{/css/user.css}">
+<link rel="stylesheet"  type= "text/css" th:href="@{/css/booking.css}">
+<link rel="stylesheet"  type= "text/css" th:href="@{/css/contactus.css}">
+</head>
+<body>
+<div th:replace="~{common/header.html:: header}"></div>
+<div class="contact-container">
+        <h2>Contact Us</h2>
+
+       
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <form action="/submitContactForm" method="post" th:object="${contact}">
+            <label>Name:</label>
+            <input type="text" th:field="*{name}" required>
+
+            <label>Email:</label>
+            <input type="email" th:field="*{email}" required>
+
+            <label>Subject:</label>
+            <input type="text" th:field="*{subject}" required>
+
+            <label>Message:</label>
+            <textarea th:field="*{message}" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+     
+        <div class="contact-info">
+            <h3>Get in Touch</h3>
+            <p><strong>Email:</strong> support@BlueSky Airways.com</p>
+            <p><strong>Phone:</strong> +91 234-987-6750</p>
+            <p><strong>Address:</strong> 123 Aviation Street, Mumbai, India</p>
+        </div>
+
+       
+        <div class="map">
+   <div class="map">
+    <iframe src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAP_LINK" 
+            style="width:100%; height:600px; border:0;" 
+            allowfullscreen="" loading="lazy">       📍 View Larger Map
+    </iframe>
+</div>
+
+ 
+    
+
+           
+</div>
+
+    </div>
+
+
+</body>
+</html>

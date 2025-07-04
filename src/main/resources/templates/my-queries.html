@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Query page </title>
+</head>
+<body>
+<div th:replace="~{common/admin-header.html:: header}"></div>
+<h2>My Queries</h2>
+<table border="1">
+    <tr>
+        <th>Query</th>
+        <th>Status</th>
+        <th>Admin Response</th>
+    </tr>
+    <tr th:each="query : ${queries}">
+        <td th:text="${query.message}"></td>
+        <td th:text="${query.status}"></td>
+        <td th:text="${query.adminResponse} ?: 'Pending'"></td>
+    </tr>
+</table>
+
+</body>
+</html>

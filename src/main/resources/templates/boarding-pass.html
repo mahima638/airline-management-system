@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Boarding Pass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .boarding-pass {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background: #f8f9fa;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            font-size: 24px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .details {
+            width: 100%;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .details p {
+            font-size: 16px;
+            margin: 8px 0;
+            padding: 5px;
+            background: #fff;
+            border-radius: 5px;
+            border-left: 5px solid #007bff;
+        }
+
+        .details span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="boarding-pass">
+        <h2>Boarding Pass</h2>
+        <div class="details">
+            <p><strong>Passenger:</strong> <span th:text="${name}"></span></p>
+            <p><strong>Phone Number:</strong> <span th:text="${phoneno}"></span></p>
+            <p><strong>Date of Birth:</strong> <span th:text="${dob}"></span></p>
+            <p><strong>Nationality:</strong> <span th:text="${nationality}"></span></p>
+            <p><strong>Departure City:</strong> <span th:text="${departure_cities}"></span></p>
+            <p><strong>Arrival City:</strong> <span th:text="${arrival_cities}"></span></p>
+            <p><strong>Booking ID:</strong> <span th:text="${bookingId}"></span></p>
+            <p>Trip Type: <span th:text="${tripType != null ? tripType : 'Not Available'}"></span></p>
+
+        </div>
+    </div>
+</body>
+</html>

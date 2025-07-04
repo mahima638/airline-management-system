@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin Manage Bookings</title>
+<link rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
+</head>
+<body>
+
+<div th:replace="~{common/admin-header.html:: header}"></div>
+
+<div class="quick-actions-flight">
+    <a th:href="@{/admin/manage/booking?mode=add}" class="btn-primary">Add New Booking</a>
+    <a th:href="@{/admin/manage/booking?mode=view}" class="btn-primary">View Bookings</a>
+    <a th:href="@{/admin/manage/booking?mode=delete}" class="btn-primary">Delete Bookings</a>
+</div>
+
+<div th:if="${message}" class="message-box">
+    <p th:text="${message}"></p>
+</div>
+
+<div th:if="${mode == 'add'}">
+    <h2>Add Booking</h2>
+    <form th:action="@{/admin/manage/booking/add}" th:object="${booking}" method="post">
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required><br>
+        
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required><br>
+        
+        <label>Phone:</label>
+        <input type="tel" th:field="*{phoneno}" pattern="[0-9]{10}" required><br>
+        
+        <label>Departure City:</label>
+        <input type="text" th:field="*{departure_cities}" required><br>
+        
+        <label>Arrival City:</label>
+        <input type="text" th:field="*{arrival_cities}" required><br>
+        
+        <button type="submit">Add Booking</button>
+    </form>
+</div>
+
+<div th:if="${mode == 'view'}">
+    <h2>View Bookings</h2>
+    <table class="flight-table">
+        <tr>
+            <th>Booking ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Departure</th>
+            <th>Arrival</th>
+        </tr>
+        <tr th:each="booking : ${bookings}">
+    <td th:text="${booking.id}"></td>
+    <td th:text="${booking.name}"></td>
+   <td th:text="${booking.email != null ? booking.email : 'N/A'}"></td>
+
+    <td th:text="${booking.phoneno}"></td>
+    <td th:text="${booking.departure_cities != null ? booking.departure_cities : 'N/A'}"></td>
+    <td th:text="${booking.arrival_cities != null ? booking.arrival_cities : 'N/A'}"></td>
+</tr>
+
+    </table>
+</div>
+
+<div th:if="${mode == 'delete'}">
+    <h2>Delete Booking</h2>
+    <table class="flight-table">
+        <tr>
+            <th>Booking ID</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="booking, iterStat : ${bookings}" th:if="${iterStat.index} < 5">
+            <td th:text="${booking.id}"></td>
+            <td th:text="${booking.name}"></td>
+            <td>
+                <form th:action="@{/admin/manage/booking/delete}" method="post">
+                    <input type="hidden" name="bookingId" th:value="${booking.id}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

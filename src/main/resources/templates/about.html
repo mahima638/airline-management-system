@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>About Us</title>
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="stylesheet" th:href="@{/css/about.css}">
+
+
+</head>
+    
+
+<body>
+ <div th:replace="~{common/header.html::header}"></div>
+    <header>
+        <h1>Welcome to Our Airline Service</h1>
+    </header>
+
+    <section class="about-container">
+        <div class="about-content">
+            <h2>Who We Are</h2>
+            <p>
+                We are a premium airline offering world-class travel experiences. Our mission is to provide safe, comfortable, and affordable flights to destinations worldwide.
+            </p>
+
+            <h2>Our Services</h2>
+            <ul>
+                <li>Affordable flight bookings</li>
+                <li>Comfortable seating & luxury services</li>
+                <li>On-time departures & arrivals</li>
+                <li>24/7 customer support</li>
+            </ul>
+
+            <h2>Contact Us</h2>
+            <p>
+                Have questions? Reach out to our customer support team at  
+                <a href="mail to:support@bluesky.com">support@blueskyairways.com</a>.
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>

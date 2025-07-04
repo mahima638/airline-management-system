@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/admin-dashboard.css}">
+</head>
+<body>
+
+    <div class="admin-container">
+        
+        <div th:replace="~{common/admin-header.html::header}"></div>
+
+        <div class="dashboard-content">
+            <h1>Welcome, Admin</h1>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Flights</h3>
+                    <p th:text="${totalFlights}">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Bookings</h3>
+                    <p th:text="${totalBookings}">0</p>
+                </div>
+            </div>
+
+            <section class="admin-actions">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions">
+                    <a th:href="@{/admin/manage/booking?mode=add}" class="quick-actions">Add New Flight</a>
+                    <a th:href="@{/admin/manage/booking?mode=view}" class="quick-actions">View Bookings</a>
+                </div>
+            </section>
+
+            <div class="announcement-box">
+                <h3>Announcements</h3>
+                <p>Next flight schedule update on May5, 2:00 AM - 4:00 AM.</p>
+                <p>Most booked route: New York → Singapore (5,320 bookings!)</p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

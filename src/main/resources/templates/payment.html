@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Payment Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/payment.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/booking.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">
+</head>
+<body>
+    <div th:replace="~{common/header.html::header}"></div>
+   <div class="form-wrapper">
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <th:block th:if="${payment != null}">
+            <div class="form-container">
+                <form action="/processPayment" method="post" th:object="${payment}">
+                    <h2 class="payment-heading">Payment Details</h2>
+              <th:block th:if="${bookingId != null}">
+                        <label>Booking ID: <span th:text="${bookingId}"></span></label>
+                        <input type="hidden" name="bookingId" th:value="${bookingId}" />
+                    </th:block>
+                    <th:block th:unless="${bookingId != null}">
+                        <p style="color: red;">Error: No flight selected. Please go back and choose a flight.</p>
+                    </th:block>
+                  <input type="hidden" name="ticketPrice" th:value="${ticketPrice}" />
+                   <label>Select Payment Method:</label>
+                    <select th:field="*{paymentMethod}" name="paymentMethod" onchange="this.form.submit()" required>
+                        <option value="">-- Select Payment Method --</option>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="debit_card">Debit Card</option>
+                        <option value="upi">UPI</option>
+                        <option value="net_banking">Net Banking</option>
+                    </select>
+                    <div class="form-group">
+                        <label>Account Holder Name:</label>
+                        <input type="text" th:field="*{accountHolderName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Number:</label>
+                        <input type="text" th:field="*{accountNumber}" pattern= "{0-9}{10}" maxlength="10"placeholder="Enter your account number" required>
+                    </div>
+                <th:block th:if="${payment.paymentMethod == 'credit_card' or payment.paymentMethod == 'debit_card'}">
+                        <div class="form-group">
+                            <label>Card Number:</label>
+                            <input type="text" th:field="*{cardNumber}" pattern="{0-9}{10}" maxlength="10" placeholder="XXXX-XXXX-XXXX-XXXX" required max="12">
+                        </div>
+                         <div class="form-group">
+                            <label>Expiry Date:</label>
+                            <input type="month" th:field="*{expiryDate}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVV:</label>
+                            <input type="password" th:field="*{cvv}" maxlength="3" required>
+                        </div>
+                    </th:block>
+
+                    <th:block th:if="${payment.paymentMethod == 'upi'}">
+                        <div class="form-group">
+                            <label>UPI ID:</label>
+                            <input type="text" th:field="*{upiId}" placeholder="example@upi" required>
+                        </div>
+                    </th:block>
+
+                    <th:block th:if="${payment.paymentMethod == 'net_banking' or payment.paymentMethod == 'debit_card' or payment.paymentMethod == 'credit_card'}">
+                        <div class="form-group">
+                            <label>Select Bank:</label>
+                            <select th:field="*{bank}" required>
+                                <option value="">-- Select Bank --</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="sbi">SBI</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">AXIS Bank</option>
+                            </select>
+                        </div>
+                    </th:block>
+
+                   
+                    <th:block th:if="${payment.paymentMethod == 'net_banking'}">
+                        <div class="form-group">
+                            <label>IFSC Code:</label>
+                            <input type="text" th:field="*{ifscCode}"  title="Enter a valid 11-character IFSC code (e.g., SBIN0001234)" pattern="^[A-Z]{4}0[A-Z0-9]{6}$" required maxlength="11">
+                        </div>
+                    </th:block>
+
+                    
+                    <th:block th:if="${payment.paymentMethod == 'net_banking'}">
+                        <div class="form-group">
+                            <label>Transaction Password:</label>
+                            <input type="password" th:field="*{transactionPassword}"   required maxlength="6">
+                        </div>
+                    </th:block>
+
+                   
+                    <p th:if="${departure_cities != null}">Departure City: <span th:text="${departure_cities}"></span></p>
+                    <p th:if="${arrival_cities != null}">Arrival City: <span th:text="${arrival_cities}"></span></p>
+
+                    <p th:if="${booking != null and booking.seat_prefered != null}">
+                        Class: <span th:text="${booking.seat_prefered}"></span>
+                    </p>
+
+                    <p th:if="${booking != null and booking.no_of_bags != null}">
+                        Passengers: <span th:text="${booking.no_of_bags}"></span>
+                    </p>
+
+                    
+                    <label>Total Price:</label>
+                    <input type="text" id="ticketPrice" name="ticketPrice" th:value="${ticketPrice}" readonly/>
+
+                    <button type="submit">Pay Now</button>
+                </form>
+            </div>
+        </th:block>
+
+        <th:block th:unless="${payment != null}">
+            <p style="color: red;">Payment details not found.</p>
+        </th:block>
+        <div th:if="${paymentMessage}">
+        <p th:text="${paymentMessasge}"></p>
+    </div>
+</body>
+</html>

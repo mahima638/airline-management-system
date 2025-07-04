@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet"  type= "text/css" th:href="@{/css/user.css}">
+</head>
+<body>
+<header th:fragment="header">
+  <nav>
+			<ul class="navbar">
+				
+				<li><a th:href="@{/home}"> Home</a></li>
+				<li><a th:href="@{/api/flights/flightsearch}"> flight Search</a></li>
+				<li><a th:href="@{/booking}"> Booking Page</a></li>
+				<li><a th:href="@{/payment}"> Payment Page</a></li>
+				<li><a th:href="@{/about}">About</a></li>
+				<li><a th:href="@{/contactus}"> Contact Us</a></li>
+				
+            <a th:href="@{/admin/dashboard}" class="admin-btn">Admin Panel</a>
+				
+<div th:fragment="menu-icon">
+ <div class="menuIcon"> 
+ <i class="fa-solid fa-bars"></i>
+ </div>
+ </div>
+ </nav>
+</ul>
+			
+<div th:fragment="logo">
+<div class="logo">BlueSky Airways</div></div>
+
+ 
+</header>
+
+
+</body>
+</html>

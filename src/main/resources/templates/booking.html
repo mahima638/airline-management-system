@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/booking.css}">
+</head>
+<body>
+    <div th:replace="~{common/header.html :: header}"></div>
+    <div class="form-wrapper">
+        <h2 class="booking-heading">BOOKING DETAILS</h2>
+       <p class="flight-number">SELECTED FLIGHT NUMBER:<span th:text="${flightNumber}" ></span></p>
+            <input type="hidden" th:value="${flightId}">
+
+        <div class="form-container">
+            <form  th:action="@{booking/book}" th:object="${booking}" method="post">
+<div th:if="${errorMessage}" class="alert alert-danger">
+    <p th:text="${errorMessage}"></p>
+</div>
+<input type="hidden" name="tripType" th:value="${tripType}"/>
+
+               
+                <div class="form-group">
+                    <label for="name">FULL NAME:</label>
+                    <input type="text" id="name" th:field="*{name}" placeholder="Enter your full name" required> <br>
+                    <label for="name">Email:</label>
+                    <input type="text" id="email" th:field="*{email}"   placeholder="name@gmail.com" required> <br>
+                    <div th:if="${emailError}" style="color: red;">[[${emailError}]]</div>
+                    
+                    <label>Date of Birth:</label>
+<input type="date" th:field="*{dob}" max="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]" required>
+<span th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}" class="error"></span>
+
+                    <label for="gender">GENDER:</label>
+                    <select id="gender" th:field="*{gender}" required>
+                        <option value="">Select</option>
+                        <option value="Male">MALE</option>
+                        <option value="Female">FEMALE</option>
+                        <option value="Other">OTHER</option>
+                    </select>
+                   <label for="nationality">NATIONALITY</label>
+                    <input type="text" id="nationality" th:field="*{nationality}" placeholder="Enter your nationality" required><br>
+                    <label for="phoneno">PHONE NUMBER</label> 
+                    <input type="tel" id="phoneno" th:field="*{phoneno}" pattern="[0-9]{10}" maxlength="10" placeholder="Enter your phone number" required> <br>
+
+                    <label for="passportnumber">ENTER PASSPORT NUMBER:</label>
+                    <input type="text" id="passportNumber" th:field="*{passportNumber}" pattern="[0-9]+" maxlength="10" placeholder="Enter your Passport number" required> <br>
+                     
+                    <label for="password">CREATE PASSWORD</label>
+                    <input type="password" id="password" th:field="*{password}" placeholder="create 6 digit password" maxlength="6"> <br>
+                      
+                    <div th:if="${flightNumber != null}">
+                   <label for="departure_cities">DEPARTURE CITY</label> 
+                    <input type="text" id="departure_cities" th:value="${departure_cities}" readonly> <br>
+                    <input type="hidden" id="departure_cities" th:field="*{departure_cities}"> <br>
+                    <label for="arrival_cities">ARRIVAL CITY</label> 
+                    <input type="text" id="arrival_cities" th:value="${arrival_cities}" readonly> <br>
+                    <input type="hidden" id="arrival_cities" th:field="*{arrival_cities}" > <br>
+                    <label for="seat_prefered">SEAT PREFERENCE</label> 
+                    <select id="seat_prefered" th:field="*{seat_prefered}">
+                    <option value="Normal">NORMAL</option>
+                        <option value="Economy">ECONOMY</option>
+                        <option value="Business">BUISNESS</option>
+                        <option value="FirstClass">FIRST CLASS</option>
+                    </select><br>
+                   <label for="no_of_bags">NUMBER OF PASENGERS:</label>
+                    <input type="number" id="no_of_bags" th:field="*{no_of_bags}" min="1" ><br>
+                   <label>Special Request:</label>
+         <input type="text" th:field="*{special_request}" placeholder="e.g., Jain food, extra legroom" />
+
+                   <button type="submit" class="btn">BOOK NOW!</button>
+                </div>
+          <div id="paymentDialog" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); padding:20px; background:white; border: 1px solid black;">
+    <h3>Booking Confirmed!</h3>
+    <p>Your Booking ID: <span th:text="${bookingId}"></span></p>
+    <a id="paymentLink" th:href="@{'/payment?bookingId=' + ${bookingId}}">Proceed to Payment</a>
+    <button onclick="closeDialog()">Close</button>
+</div>
+
+<script>
+    window.onload = function() {
+        setTimeout(function() { 
+            var dialog = document.getElementById("paymentDialog");
+            var success = 'false';  
+            if (dialog && success === 'true') {
+                dialog.style.display = "block";
+            }
+        }, 500);
+    };
+
+    function closeDialog() {
+        var dialog = document.getElementById("paymentDialog");
+        dialog.style.display = "none";
+    }
+</script>
+
+</form>
+           
+        </div>
+    </div>
+</body>
+</html>

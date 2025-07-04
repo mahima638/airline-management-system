@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <title>Airline</title>
+</head>
+<body>
+    <div th:replace="~{common/header.html::header}"></div>
+    <main class="main-container">
+        <section class="left-section">
+            <div class="content">
+                <h1>Discover The World <br> with our flights.</h1>
+                
+                
+                <form th:action="@{/api/flights/search}" id="bookingform" method="POST">
+                    <div class="trip-type">
+                        <label>
+                            <input type="radio" name="tripType" value="return" required> Return
+                        </label>    
+                        <label>
+                            <input type="radio" name="tripType" value="oneway" required> Oneway
+                        </label>
+                    </div>
+                    
+                  
+                    <div class="input-group"> 
+                        <div class="input-wrapper">
+                            <label for="source">Source: </label>
+                            <select id="departure_cities" name="departure_cities" required>
+                                <option value="" disabled selected>--select source--</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="jodhpur">Jodhpur</option>
+                                <option value="ranchi">Ranchi</option>
+                                <option value="patna">Patna</option>
+                                <option value="lucknow">Lucknow</option>
+                                <option value="pune">Pune</option>
+                                <option value="haryana">Haryana</option>
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="chandigarh">Chandigarh</option>
+                                <option value="udaipur">Udaipur</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="hyderabad">Hyderabad</option>
+                            </select>
+                        </div>
+                        <div class="icon">
+                            <i class="fa-solid fa-plane"></i>
+                        </div>
+                        
+                        <div class="input-wrapper">
+                            <label for="destination">Destination: </label>
+                            <select id="arrival_cities" name="arrival_cities" required>
+                                <option value="" disabled selected>--select destination--</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="udaipur">Udaipur</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="pune">Pune</option>
+                                <option value="lucknow">Lucknow</option>
+                                <option value="patna">Patna</option>
+                                <option value="jodhpur">Jodhpur</option>
+                                <option value="ranchi">Ranchi</option>
+                                <option value="chandigarh">Chandigarh</option>
+                                <option value="haryana">Haryana</option>
+                                <option value="haryana">sikkim</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                   
+                    <div class="input-group"> 
+                        <div class="input-wrapper">
+                            <label for="date">Select Date:</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="icon">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+
+               	`         <button type="submit" id="searchButton">Search</button>
+                    </div>
+                </form>
+            </div>
+            
+          
+            <div class="slider">
+                <div class="slider-header">
+                    <h2>Popular Beach Destinations</h2>
+                    <div class="slider-buttons">
+                        <form action="/home/previous" method="post">
+                            <button type="submit" id="prev" class="slider-btn">
+                                <i class="fa-solid fa-angle-left"></i> 
+                            </button>
+                        </form>
+                        <form action="/home/next" method="post">
+                            <button type="submit" id="next" class="slider-btn">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </button>
+                        </form> 
+                    </div>
+                </div>
+                <div class="slider-container">
+                    <div class="slider-images">
+                        <div class="slide" th:each="destination, iterStat : ${destinations}" 
+                             th:if="${currentIndex != null and iterStat != null and ((iterStat.index >= currentIndex and iterStat.index < currentIndex + 3) or (iterStat.index < (currentIndex + 3) % destinations.size()))}">
+                            <img th:src="${destination.imagePath}" alt="Destination" />
+                            <div class="info">
+                                <span class="location" th:text="${destination.country}"></span> 
+                                <span class="sub-location" th:text="${destination.name}"></span>
+                                <div class="price">
+                                    <span th:text="'$' + ${destination.price}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      
+        <section class="right-section">
+            <img src="/Assets/plane.png"/>
+        </section>
+    </main>
+</body>
+</html>
+		

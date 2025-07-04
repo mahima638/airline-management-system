@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>user details</title>
+</head>
+<body>
+<form action="/user/get" method="get">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email">
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone">
+
+    <button type="submit">Get Details</button>
+</form>
+<h2>User Details</h2>
+<p th:text="${user.name}"></p>
+<p th:text="${user.email}"></p>
+<p th:text="${user.phone}"></p>
+
+<h3>Booking History</h3>
+<ul>
+    <li th:each="booking : ${user.bookings}">
+        <p th:text="${booking.flightId}"></p>
+        <p th:text="${booking.bookingId}"></p>
+    </li>
+</ul>
+
+<h3>Payment History</h3>
+<ul>
+    <li th:each="booking : ${user.bookings}">
+        <p th:text="${booking.payment.paymentStatus}"></p>
+        <p th:text="${booking.payment.amount}"></p>
+    </li>
+</ul>
+
+
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin query page</title>
+<link rel="stylesheet" th:href="@{/css/admin-dashboard.css}">
+</head>
+<body>
+<div th:replace="~{common/admin-header.html:: header}"></div>
+<table class= "flight-table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Query</th>
+        <th>Status</th>
+        <th>Admin Response</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="query : ${queries}">
+        <td th:text="${query.id}"></td>
+        <td th:text="${query.name}"></td>
+        <td th:text="${query.email}"></td>
+        <td th:text="${query.message}"></td>
+        <td th:text="${query.status}"></td>
+        <td th:text="${query.adminResponse} ?: 'Pending'"></td>
+        <td>
+            <form th:action="@{/admin/respond/{id}(id=${query.id})}" method="post">
+                <input type="text" name="response" placeholder="Enter Response">
+                <button type="submit">Respond</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Payment Success</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}"> 
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/bg.jpg'); /* Use actual path */
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .success-icon {
+            color: green;
+            font-size: 50px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 10px;
+            text-decoration: none;
+            color: white;
+            background: #007bff;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .details {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .trip-type {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{common/header.html::header}"></div>
+    
+   <div class="container">
+        <h1 class="success-icon">✔️ Payment Successful!</h1>
+        <p>Thank you, <strong th:text="${name}"></strong>! Your payment for Flight <strong th:text="${bookingId}"></strong> has been confirmed.</p>
+
+        <h3>Booking Details</h3>
+        <div class="details">
+            <p><strong>Departure:</strong> <span th:text="${departure_cities}"></span></p>
+            <p><strong>Arrival:</strong> <span th:text="${arrival_cities}"></span></p>
+            <p><strong>Ticket Price:</strong> ₹<span th:text="${ticketPrice}"></span></p>
+            <p><strong>Trip Type:</strong> <span class="trip-type" th:text="${tripType != null ? tripType : 'One-way'}"></span></p>
+        </div>
+
+      
+        <a class="btn" th:href="@{/home}">Book Another Flight</a>
+    </div>
+    <a th:href="@{/download-boarding-pass(
+              name=${name}, phoneno=${phoneno}, 
+              arrival_cities=${arrival_cities}, departure_cities=${departure_cities}, 
+              nationality=${nationality}, dob=${dob}, bookingId=${bookingId}, 
+              tripType=${tripType != null ? tripType : 'Not Available'})}" 
+   class="btn-primary-board">
+    Download Boarding Pass
+</a>
+
+
+
+    
+    
+  
+</body>
+</html>
