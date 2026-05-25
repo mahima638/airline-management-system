@@ -168,6 +168,13 @@ public class Booking {
 	public void setTripType(String tripType) {
 	    this.tripType = tripType;
 	}
+	public LocalDate getBookingDate() {
+	    return bookingDate;
+	}
+
+	public void setBookingDate(LocalDate bookingDate) {
+	    this.bookingDate = bookingDate;
+	}
 
 
 	public Booking(Long id, Long flightid, String name, Date dob, String gender, String nationality, String phoneno,
