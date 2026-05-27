@@ -1,6 +1,7 @@
 package TY_PROJECT.Programs.controller;
 
 import java.time.LocalDate;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class BookingApiController {
 
     // 1. Create a booking
     @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestBody Booking booking) {
+    public ResponseEntity<Booking> createBooking(@Valid @RequestBody Booking booking) {
         booking.setBookingDate(LocalDate.now());
         Booking saved = bookingService.saveBooking(booking);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
