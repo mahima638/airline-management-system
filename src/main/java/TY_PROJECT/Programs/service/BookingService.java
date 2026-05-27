@@ -1,5 +1,5 @@
 package TY_PROJECT.Programs.service;
-
+import TY_PROJECT.Programs.exception.BookingNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -23,8 +23,7 @@ public class BookingService {
     
     public Booking getBookingById(Long bookingId) {
         return bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + bookingId));
-    }
+        		.orElseThrow(() -> new BookingNotFoundException(bookingId));    }
 
    
     public List<Booking> getAllBookings() {

@@ -1,4 +1,5 @@
 package TY_PROJECT.Programs.service;
+import TY_PROJECT.Programs.exception.FlightNotFoundException;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -27,7 +28,7 @@ public class FlightService {
 	}
 
 	public Flight getFlightById(Long id) {
-        return flightRepository.findById(id).orElseThrow(() -> new RuntimeException("Flight not found"));
+        return flightRepository.findById(id).orElseThrow(() -> new FlightNotFoundException(id));
     }
 	public long countFlights() {
         return flightRepository.count();
