@@ -11,7 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 	    "TY_PROJECT.Programs.service",
 	    "TY_PROJECT.Programs.dto",
 	    "TY_PROJECT.Programs.config",
-	    "TY_PROJECT.Programs.exception"
+	    "TY_PROJECT.Programs.exception",
+	    "TY_PROJECT.Programs.repository"
 	})
 @EntityScan(basePackages = "TY_PROJECT.ProgramsController.entity") 
 public class ProgramsApplication {
