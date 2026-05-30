@@ -1,14 +1,10 @@
 package TY_PROJECT.Programs.service;
 import TY_PROJECT.Programs.exception.FlightNotFoundException;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import TY_PROJECT.Programs.repository.FlightRepository;
 import TY_PROJECT.ProgramsController.entity.Flight;
 import jakarta.transaction.Transactional;
@@ -57,14 +53,14 @@ public class FlightService {
             
            
             return flightRepository.save(flight);
-        }).orElseThrow(() -> new RuntimeException("Flight not found"));
+        }).orElseThrow(() -> new FlightNotFoundException(id));
     }
 
   
     @Transactional
     public void deleteFlight(Long id) {
         if (!flightRepository.existsById(id)) {
-            throw new RuntimeException("Flight not found");
+        	throw new FlightNotFoundException(id);
         }
         flightRepository.deleteById(id);
     }

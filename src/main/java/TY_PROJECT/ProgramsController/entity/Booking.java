@@ -3,6 +3,8 @@ package TY_PROJECT.ProgramsController.entity;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -46,6 +48,7 @@ public class Booking {
   
     private String passportNumber;
    
+    @JsonIgnore
     private String password;
     @Column(name = "booking_date")
     private LocalDate bookingDate;

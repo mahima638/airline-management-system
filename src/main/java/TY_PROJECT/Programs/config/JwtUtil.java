@@ -11,7 +11,9 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+	private final Key SECRET_KEY = Keys.hmacShaKeyFor(
+		    "airline-management-super-secret-key-2024-mahima-rajpurohit".getBytes()
+		);
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10 hours
 
     // Generate token
