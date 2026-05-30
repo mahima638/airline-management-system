@@ -1,52 +1,168 @@
 # ✈️ Airline Management System
 
-A full-stack Airline Management System built using **Java**, **Spring Boot**, **Thymeleaf**, and **SQL**.  
-This project allows users to search for flights, book tickets, and manage flight data, providing a smooth airline reservation experience.
+A backend REST API system for airline flight and booking management built with **Java** and **Spring Boot**. Features JWT authentication, global exception handling, input validation, and is deployed on Railway.
 
+🔗 **Live API:** https://airline-management-system-production-35c1.up.railway.app
 
+---
 
 ## 💻 Tech Stack
 
-- **Backend:** Java, Spring Boot
-- **Frontend:** Thymeleaf, HTML, CSS
-- **Database:** MySQL / SQL
-- **Tools:** Spring Tool Suite (STS), Maven
+- **Language:** Java 17
+- **Framework:** Spring Boot 3.4
+- **Security:** Spring Security + JWT
+- **Database:** MySQL
+- **ORM:** Spring Data JPA / Hibernate
+- **Validation:** Jakarta Validation
+- **Testing:** JUnit 5 + Mockito
+- **Deployment:** Railway
+- **Tools:** Maven, Postman, Spring Tool Suite
 
 ---
 
 ## 🔧 Features
 
-- ✈️ Flight Search (by city, date, ID)
-- 🧍 Passenger Booking
-- 💳 Payment Page (Mock flow)
-- 📋 Booking ID Auto-generation
-- 🛫 Boarding Pass Generation
-- 🧑 Admin Panel – Add/Delete Flights
-- 📬 Contact Us / Feedback System
+- ✈️ Flight Search API (by source, destination, date)
+- 🧍 Passenger Booking API (create, view, cancel)
+- 🔐 JWT Authentication (register, login, protected routes)
+- ❌ Global Exception Handling (custom error responses)
+- ✅ Input Validation (email, phone, required fields)
+- 🧪 Unit Tests with Mockito
+- 🛫 Admin Panel (add/delete flights)
+- 📋 Boarding Pass Generation
 
+---
 
-## 📂 Project Structure
+## 📡 API Endpoints
 
-- `src/main/java` → Controllers, Services, Models
-- `src/main/resources/templates` → HTML/Thymeleaf views
-- `application.properties` → Database config, Thymeleaf setup
+### Auth (Public)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login and get JWT token |
 
+### Flights (Public)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/flights` | Get all flights |
+| GET | `/api/flights/{id}` | Get flight by ID |
+| GET | `/api/flights/search` | Search flights by source, destination, date |
 
+### Bookings (Protected - JWT Required)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/bookings` | Create a booking |
+| GET | `/api/bookings` | Get all bookings |
+| GET | `/api/bookings/{id}` | Get booking by ID |
+| DELETE | `/api/bookings/{id}` | Cancel a booking |
 
+---
 
+## 🔐 Authentication
 
-## 🚀 How to Run
+This API uses JWT (JSON Web Token) authentication.
 
-1. Clone the repo
+**Step 1 - Register:**
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "password": "password123"
+}
+```
+
+**Step 2 - Login:**
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+    "email": "john@gmail.com",
+    "password": "password123"
+}
+```
+
+**Step 3 - Use token:**
+```http
+GET /api/bookings
+Authorization: Bearer <your_token_here>
+```
+
+---
+
+## ❌ Error Handling
+
+All errors return consistent JSON responses:
+
+```json
+{
+    "status": 404,
+    "message": "Flight not found with ID: 999",
+    "timestamp": "2026-05-30"
+}
+```
+
+| Status Code | Meaning |
+|-------------|---------|
+| 200 | Success |
+| 201 | Created |
+| 400 | Bad Request (validation error) |
+| 403 | Forbidden (no token) |
+| 404 | Not Found |
+| 500 | Internal Server Error |
+
+---
+
+## 🚀 Run Locally
+
+1. Clone the repo:
+```bash
 git clone https://github.com/mahima638/airline-management-system.git
-2. Open in **Spring Tool Suite**
-3. Configure DB in `application.properties`
-4. Run the project and visit `http://localhost:8080`
+```
 
+2. Create MySQL database:
+```sql
+CREATE DATABASE airlinemanagementsystem;
+```
 
+3. Update `application.properties`:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/airlinemanagementsystem
+spring.datasource.username=root
+spring.datasource.password=yourpassword
+```
+
+4. Run the project in Spring Tool Suite
+
+5. Test APIs at `http://localhost:8080`
+
+---
+
+## 🧪 Running Tests
+
+```bash
+mvn test
+```
+
+4 unit tests covering FlightService — get all, get by ID, not found exception, delete exception.
+
+---
+
+## 📂 Project Structuresrc/main/java
+├── controller      → REST API controllers
+├── service         → Business logic
+├── repository      → Database operations
+├── entity          → JPA entities
+├── config          → JWT + Security config
+├── exception       → Custom exceptions + global handler
+└── dto             → Data transfer objects
+---
 
 ## 👩‍💻 Developed By
 
-**Mahima Rajpurohit**  
-📧 [mahimarp2004@gmail.com]  
-
+**Mahima Rajpurohit**
+📧 mahimarp2004@gmail.com
+🔗 [GitHub](https://github.com/mahima638)
